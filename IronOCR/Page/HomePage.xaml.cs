@@ -53,9 +53,11 @@ namespace IronOCR
             ImageViewer1.Width = (wordArea_Width / 2) - 15;
             //ImageViewer2.Width = (wordArea_Width / 2) - 15;
             ProcessedDataTextBox.Width = (wordArea_Width / 2) - 15;
-            Panel2_1.Width = (wordArea_Width / 2) - 15;
-            Panel2_1_1.Width = ((wordArea_Width / 2) - 15) / 2;
-            Panel2_1_2.Width = ((wordArea_Width / 2) - 15) / 2;
+            Panel2_1.Width = (wordArea_Width / 5);
+            Panel2_2.Width = (wordArea_Width / 5);
+            Panel2_3.Width = (wordArea_Width / 5);
+            Panel2_4.Width = (wordArea_Width / 5);
+            Panel2_5.Width = (wordArea_Width / 5);
 
             //Button Enable/Diable
             FileNameTextBox.IsEnabled = false; 
@@ -152,6 +154,7 @@ namespace IronOCR
                 if (list_ProcessedImages.Count > 0)
                 {
                     ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(list_ProcessedImages[0]);
+                    ProcessedDataTextBox.Text = list_ProcessedText[0];
                     imageIdx = 0;
                 }
             }
@@ -163,7 +166,15 @@ namespace IronOCR
         {
             flagUploadClicked = false;
             FileNameTextBox.Text = String.Empty;
+            ImageViewer1.Source = null;
+            ProcessedDataTextBox.Text = String.Empty;
             BrowseButton.IsEnabled = true;
+
+            list_ProcessedText = new List<string>();
+            list_ProcessedImages = new List<System.Drawing.Image>();
+            list_PDFImages = new List<System.Drawing.Image>();
+            imageIdx = 0;
+            IronOCR_HomePage.Background = System.Windows.Media.Brushes.White;
         }
 
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
@@ -195,6 +206,7 @@ namespace IronOCR
                     {
                         System.Drawing.Image currentImage = list_ProcessedImages[imageIdx - 1];
                         ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                        ProcessedDataTextBox.Text = list_ProcessedText[imageIdx - 1];
                         imageIdx--;
                     }
                 }
@@ -221,6 +233,7 @@ namespace IronOCR
                 {
                     System.Drawing.Image currentImage = list_ProcessedImages[0];
                     ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                    ProcessedDataTextBox.Text = list_ProcessedText[0];
                     imageIdx = 0;
                 }
             }
@@ -245,6 +258,7 @@ namespace IronOCR
                     {
                         System.Drawing.Image currentImage = list_PDFImages[imageIdx + 1];
                         ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                        ProcessedDataTextBox.Text = list_ProcessedText[imageIdx + 1];
                         imageIdx++;
                     }
                 }

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IronOCR.Service
 {
-    class Helper_FolderFileHandler
+    class FolderFileHandler
     {
         public static string GetDocumentsPath()
         {
@@ -35,7 +32,7 @@ namespace IronOCR.Service
             }
         }
 
-        public static Tuple<Boolean, string> WriteData_TextFile(string outputFilePath, string outputText, string[] array_OutputText, Boolean flag_OutputIsArray, Boolean flag_IfFileExists_Replace)
+        public static Tuple<Boolean, string> WriteData_TextFile(string outputFilePath, string outputText, string[] array_OutputText, Boolean flag_OutputIsArray = false, Boolean flag_IfFileExists_Replace = true)
         {
             try
             {
@@ -82,6 +79,29 @@ namespace IronOCR.Service
             catch (Exception exp)
             {
                 return Tuple.Create(false, exp.Message);
+            }
+        }
+
+        public static Tuple<Boolean, string> WaitForFile_AtLocation(string filePath, int waitSeconds)
+        {
+            for (int i = 0; i < waitSeconds; i++)
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    break;
+                }
+                else
+                {
+                    Task.Delay(1000);
+                }
+            }
+            if (!System.IO.File.Exists(filePath))
+            {
+                return Tuple.Create(true, "Failed");
+            }
+            else
+            {
+                return Tuple.Create(true, "Success");
             }
         }
     }

@@ -5,6 +5,4 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IronOCR"
         mc:Ignorable="d"
-        Title="IronOCR" Height="600" Width="600" Icon="Asserts\Logo1.JPG" Source="Page\HomePage.xaml">
-    
-</NavigationWindow>
+        Title="IronOCR" Icon="Asserts\IronOCR_Logo1.png" Source="Page\HomePage.xaml" WindowState="Maximized"/>

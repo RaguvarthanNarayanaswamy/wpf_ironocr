@@ -27,7 +27,6 @@ C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\IronOCR\IronOCR\bin\Debu
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\IronOCR\IronOCR\obj\Debug\IronOCR.csproj.CopyComplete
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\IronOCR\IronOCR\bin\Debug\IronOcr.dll
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\IronOCR\IronOCR\bin\Debug\IronOcr.xml
-C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\bin\Debug\Asserts\Mountains.mp4
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\bin\Debug\IronOCR.exe.config
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\bin\Debug\IronOCR.exe
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\bin\Debug\IronOCR.pdb
@@ -56,3 +55,5 @@ C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\obj\Debug\Ir
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\obj\Debug\IronOCR.csproj.CopyComplete
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\obj\Debug\IronOCR.exe
 C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\obj\Debug\IronOCR.pdb
+C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\bin\Debug\Ghostscript.NET.dll
+C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR_WPF\IronOCR\bin\Debug\Ghostscript.NET.xml

@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ghostscript.NET">
+      <HintPath>..\packages\Ghostscript.NET.1.2.1\lib\net40\Ghostscript.NET.dll</HintPath>
+    </Reference>
     <Reference Include="IronOcr, Version=4.4.0.21181, Culture=neutral, PublicKeyToken=5f366048dc436899, processorArchitecture=MSIL">
       <HintPath>..\packages\IronOcr.4.4.0\lib\net40\IronOcr.dll</HintPath>
     </Reference>
@@ -68,8 +71,11 @@
     <Compile Include="Page\UploadPage.xaml.cs">
       <DependentUpon>UploadPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Service\Helper_FolderFileHandler.cs" />
-    <Compile Include="Service\Helper_PDFHandling.cs" />
+    <Compile Include="Service\GhostScriptHandler.cs" />
+    <Compile Include="Service\FolderFileHandler.cs" />
+    <Compile Include="Service\PageHandler.cs" />
+    <Compile Include="Service\PDFHandler.cs" />
+    <Compile Include="Service\ImageHandler.cs" />
     <Compile Include="Service\IronOCRHandler.cs" />
     <Compile Include="Service\ZoomBorder.cs" />
     <Page Include="Page\HomePage.xaml">
@@ -130,10 +136,26 @@
     <Resource Include="Asserts\Background-Space.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Asserts\Mountains.mp4">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Resource Include="Asserts\IronOCR_Logo1.png" />
+    <Resource Include="Asserts\IronOCR_Logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Asserts\IronOCR_Background.png" />
+    <Resource Include="Asserts\IronOCR_Logo.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Asserts\Buttons\browser.png" />
+    <Resource Include="Asserts\Buttons\check.png" />
+    <Resource Include="Asserts\Buttons\dislike.png" />
+    <Resource Include="Asserts\Buttons\house.png" />
+    <Resource Include="Asserts\Buttons\leftarrow.png" />
+    <Resource Include="Asserts\Buttons\pen.png" />
+    <Resource Include="Asserts\Buttons\pointer.png" />
+    <Resource Include="Asserts\Buttons\rightarrow.png" />
+    <Resource Include="Asserts\Buttons\wrong.png" />
+    <Resource Include="Asserts\Buttons\zoom-in.png" />
+    <Resource Include="Asserts\Buttons\zoom-out.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

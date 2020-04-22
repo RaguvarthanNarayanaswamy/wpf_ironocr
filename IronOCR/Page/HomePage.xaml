@@ -4,8 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IronOCR"
-      mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="600" Title="HomePage">
+      mc:Ignorable="d" Title="HomePage">
     <!--<Button Content="Test" HorizontalAlignment="Left" Margin="210,237,0,0" VerticalAlignment="Top" Width="75" Click="Sample_Click"/>-->
     <!--<Page.Background>
         <ImageBrush ImageSource="/IronOCR;component/Asserts/Background-Space.jpg" Opacity="0.3"/>
@@ -22,14 +21,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="370"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Name="rowDef1"/>
+            <RowDefinition Name="rowDef2"/>
+            <RowDefinition Name="rowDef3"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="580" />
+            <ColumnDefinition Name="colDef1"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -39,21 +36,126 @@
         </Grid.Background>
 
         <StackPanel Grid.Column="0" Grid.Row="0" Name="Panel1" Orientation="Horizontal" Margin="10,10,0,0">
-            <TextBox HorizontalAlignment="Left" Height="30" Width="455" Margin="0,0,0,0" VerticalAlignment="Top" Name="FileNameTextBox" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5"/>
-            <Button x:Name="BrowseButton" Content="Browse a file" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top" Width="100" Click="BrowseButton_Click" Height="30"/>
+            <TextBox Name="FileNameTextBox" HorizontalAlignment="Left" Height="40" Margin="0,0,0,0" FontSize="16" FontFamily="Consolas" FontWeight="Bold" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="5">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button x:Name="BrowseButton" Content="Browse" HorizontalAlignment="Right" Margin="10,0,0,0" VerticalAlignment="Top" Width="130" FontSize="20" FontFamily="Consolas" FontWeight="Bold" Click="BrowseButton_Click" Height="40">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="UploadButton" Content="Upload" Margin="10,0,0,0" Height="40" Width="130" FontSize="20" FontWeight="Bold" FontFamily="Consolas" HorizontalContentAlignment="Center" Click="UploadButton_Click"  Visibility="Visible">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="ClearButton" Content="Clear" Margin="10,0,0,0" Height="40" Width="130" FontSize="20" FontWeight="Bold" FontFamily="Consolas" HorizontalContentAlignment="Center" Click="ClearButton_Click" Visibility="Visible">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="1" Name="Panel2" Orientation="Horizontal" Margin="10,10,5,0" Background="AliceBlue">
-            
+        <StackPanel Grid.Column="0" Grid.Row="1" Name="Panel2" Orientation="Horizontal" Margin="10,10,5,0">
+            <StackPanel Name="Panel2_1" Orientation="Horizontal">
+                <StackPanel Name="Panel2_1_1" Orientation="Horizontal">
+                    <Button Name="ZoomInButton" Width="45" Height="45" Margin="20,0,0,0" Click="ZoomInButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/IronOCR;component/Asserts/Buttons/zoom-in.png" Width="35" Height="35"/>
+                        </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="25"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Name="ZoomOutButton" Width="45" Height="45" Margin="20,0,0,0" Click="ZoomOutButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/IronOCR;component/Asserts/Buttons/zoom-out.png" Width="35" Height="35"/>
+                        </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="25"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+                <StackPanel Name="Panel2_1_2" Orientation="Horizontal">
+                    <Button Name="LeftButton"  Width="45" Height="45" Margin="20,0,0,0" Click="LeftButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/IronOCR;component/Asserts/Buttons/leftarrow.png" Width="35" Height="35" Margin="0,0,5,0"/>
+                        </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="25"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Name="HomeButton" Width="45" Height="45" Margin="20,0,0,0" Click="HomeButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/IronOCR;component/Asserts/Buttons/house.png" Width="35" Height="35" Margin="0,0,0,5"/>
+                        </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="25"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Name="RightButton" Width="45" Height="45" Margin="20,0,0,0" Click="RightButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/IronOCR;component/Asserts/Buttons/rightarrow.png" Width="35" Height="35" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="25"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+                <StackPanel Name="Panel2_1_3" Orientation="Horizontal">
+                    <ProgressBar Name="ProgressBar1"  Minimum="0" Maximum="100"  Margin="10,0,0,0" Height="35" Foreground="Blue" IsIndeterminate="True" HorizontalAlignment="Right" Visibility="Hidden">
+                        <ProgressBar.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </ProgressBar.Resources>
+                    </ProgressBar>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="2" Name="Panel3" Margin="10,10,5,0" Background="Aquamarine">
-            <Image Name="ImageViewer1" Margin="5,5,5,5" HorizontalAlignment="Center"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="3" Name="Panel4" Orientation="Horizontal" Margin="10,10,5,0" Background="AliceBlue">
-
-        </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="4" Name="Panel5" Orientation="Horizontal" Margin="0,0,0,0">
-            <Button x:Name="UploadButton" Content="Upload" Margin="165,0,0,0" Height="30" Width="100" HorizontalContentAlignment="Center" Click="UploadButton_Click" Visibility="Visible"/>
-            <Button x:Name="ClearButton" Content="Clear" Margin="50,0,0,0" Height="30" Width="100" HorizontalContentAlignment="Center" Click="ClearButton_Click" Visibility="Visible"/>
+        <StackPanel Grid.Column="0" Grid.Row="2" Name="Panel3" Orientation="Horizontal" Margin="10,10,5,0" Visibility="Visible">
+            <Border Background="WhiteSmoke" Margin="5,5,5,5" HorizontalAlignment="Left" >
+                <Image Name="ImageViewer1"/>
+                <Border.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Border.Resources>
+            </Border>
+            <!--<Border Background="WhiteSmoke" Margin="5,5,5,5" HorizontalAlignment="Right" >
+                <Image Name="ImageViewer2"/>
+                <Border.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Border.Resources>
+            </Border>-->
+            <TextBox Name="ProcessedDataTextBox" Margin="5,5,5,5" HorizontalAlignment="Right" Background="WhiteSmoke">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
         </StackPanel>
     </Grid>
 </Page>

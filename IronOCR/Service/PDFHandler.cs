@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace IronOCR.Service
 {
-    class Helper_PDFHandling
+    class PDFHandler
     {
         public static Tuple<Boolean,string> PDF_NonScanned(string inputFilePath)
         {
@@ -70,7 +70,7 @@ namespace IronOCR.Service
                 if (System.IO.Path.GetExtension(inputFilePath).ToLower().Trim() == ".pdf")
                 {
                     string outputFileName = prefixForOutputPDF.Trim() + System.IO.Path.GetFileNameWithoutExtension(inputFilePath);
-                    Tuple<Boolean, string> result_CreateFolder = Helper_FolderFileHandler.CreateFolder(outputFolderPath);
+                    Tuple<Boolean, string> result_CreateFolder = FolderFileHandler.CreateFolder(outputFolderPath);
                     PdfDocument inputDocument = PdfReader.Open(inputFilePath, PdfDocumentOpenMode.Import);
                     int count = inputDocument.PageCount;
                     List<string> list_OutputFiles = new List<string>();

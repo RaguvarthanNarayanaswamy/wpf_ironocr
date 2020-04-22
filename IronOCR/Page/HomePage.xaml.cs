@@ -12,9 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IS_PDF = IronOCR.Service.Helper_PDFHandling;
+using IronOcr;
+using PDFSH = IronOCR.Service.PDFHandler;
 using OCRS = IronOCR.Service.IronOCRHandler;
-using FS = IronOCR.Service.Helper_FolderFileHandler;
+using FSH = IronOCR.Service.FolderFileHandler;
+using IHS = IronOCR.Service.ImageHandler;
+using GSHS = IronOCR.Service.GhostScriptHandler;
+using PHS = IronOCR.Service.PageHandler;
+using System.Drawing;
 
 namespace IronOCR
 {
@@ -23,67 +28,240 @@ namespace IronOCR
     /// </summary>
     public partial class HomePage : Page
     {
+        List<System.Drawing.Image> list_PDFImages = new List<System.Drawing.Image>();
+        List<System.Drawing.Image> list_ProcessedImages = new List<System.Drawing.Image>();
+        List<string> list_ProcessedText = new List<string>();
+        int imageIdx = 0;
+        Boolean flagUploadClicked = false;
+
         public HomePage()
         {
             InitializeComponent();
-        }
+            var screenSize = PHS.GetScreenSize();
 
-        private void Sample_Click(object sender, RoutedEventArgs e)
-        {
-            //Uri uri = new Uri("/IronOCR;component/Page/UploadPage.xaml", UriKind.Relative);
-            //this.NavigationService.Navigate(uri);
-        }
+            double wordArea_Width = screenSize.Item1 - 5;
+            double wordArea_Height = screenSize.Item2 - 10;
 
+            rowDef1.Height = new GridLength(50);
+            rowDef2.Height = new GridLength(60);
+            rowDef3.Height = new GridLength(wordArea_Height - 200);
+            colDef1.Width = new GridLength(wordArea_Width);
+
+            FileNameTextBox.Width = (wordArea_Width/5)*3;
+
+            ProgressBar1.Width = ((wordArea_Width / 5) * 2) - 355;
+            ImageViewer1.Width = (wordArea_Width / 2) - 15;
+            //ImageViewer2.Width = (wordArea_Width / 2) - 15;
+            ProcessedDataTextBox.Width = (wordArea_Width / 2) - 15;
+            Panel2_1.Width = (wordArea_Width / 2) - 15;
+            Panel2_1_1.Width = ((wordArea_Width / 2) - 15) / 2;
+            Panel2_1_2.Width = ((wordArea_Width / 2) - 15) / 2;
+
+            //Button Enable/Diable
+            FileNameTextBox.IsEnabled = false; 
+            UploadButton.IsEnabled = false;
+            ClearButton.IsEnabled = false;
+        }
+        
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
-            openFileDlg.Filter = "PDF (*.PDF)|*.PDF|" + "Images (*.PNG;*.JPG;*.GIF;*.BMP)|*.PNG;*.JPG;*.GIF;*.BMP";
+            openFileDlg.Filter = "Images (*.PNG;*.JPG;*.GIF;*.BMP)|*.PNG;*.JPG;*.GIF;*.BMP|"+ "PDF (*.PDF)|*.PDF";
             openFileDlg.Multiselect = false;
             openFileDlg.Title = "IronOCR File Browser";
             Nullable<bool> result = openFileDlg.ShowDialog();
-            //Boolean result = true;
 
             if (result == true)
             {
-                string fileName = openFileDlg.FileName;
-                FileNameTextBox.Text = fileName;
+                string inputFilePath = openFileDlg.FileName;
+                FileNameTextBox.Text = inputFilePath;
+                string fileExtension = System.IO.Path.GetExtension(inputFilePath);
+                if (fileExtension.ToLower() == ".png" || fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".bmp")
+                {
+                    //UI elements 
+                    Panel2.Visibility = Visibility.Visible;
+                    Panel3.Visibility = Visibility.Visible;  
+                    ZoomInButton.Visibility = Visibility.Visible;
+                    ZoomOutButton.Visibility = Visibility.Visible;
+                    LeftButton.Visibility = Visibility.Hidden;
+                    RightButton.Visibility = Visibility.Hidden;
+                    HomeButton.Visibility = Visibility.Hidden;
+                    UploadButton.IsEnabled = true;
+                    ClearButton.IsEnabled = true;
 
-                OCRS.SimpleRead(fileName);
-                ////string fileName = @"C:\Users\Raguvarthan\Desktop\Logo1.JPG";
-                //string fileExtension = System.IO.Path.GetExtension(fileName);
-                //if (fileExtension.ToLower() == ".png" || fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".gif" || fileExtension.ToLower() == ".bmp")
-                //{
-                //    UploadButton.Visibility = Visibility.Visible;
-                //    Panel2.Visibility = Visibility.Hidden;
-                //    Panel3.Visibility = Visibility.Visible;
-                //    Panel4.Visibility = Visibility.Hidden;
-                //    BitmapImage bitmap = new BitmapImage();
-                //    bitmap.BeginInit();
-                //    bitmap.UriSource = new Uri(fileName);
-                //    bitmap.EndInit();
-                //    ImageViewer1.Source = bitmap;
-                //}
-                //else if (fileExtension.ToLower() == ".pdf")
-                //{
-                //    UploadButton.Visibility = Visibility.Visible;
-                //    Panel2.Visibility = Visibility.Visible;
-                //    Panel3.Visibility = Visibility.Visible;
-                //    Panel4.Visibility = Visibility.Visible;
-                //    MessageBox.Show("PDF");
-                //}
+                    System.Drawing.Image inputImage = System.Drawing.Image.FromFile(inputFilePath);
+                    list_PDFImages.Add(inputImage);
+                    ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(inputImage);
+                }
+                else if (fileExtension.ToLower() == ".pdf")
+                {
+                    //UI elements 
+                    Panel2.Visibility = Visibility.Visible;
+                    Panel3.Visibility = Visibility.Visible;
+                    ZoomInButton.Visibility = Visibility.Visible;
+                    ZoomOutButton.Visibility = Visibility.Visible;
+                    LeftButton.Visibility = Visibility.Visible;
+                    RightButton.Visibility = Visibility.Visible;
+                    HomeButton.Visibility = Visibility.Visible;
+                    UploadButton.IsEnabled = true;
+                    ClearButton.IsEnabled = true;
+
+                    var resultPDFtoImage = GSHS.ConvertPDF_ToImage(inputFilePath);
+                    if (resultPDFtoImage.Item1 && resultPDFtoImage.Item3 > 0)
+                    {
+                        ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(resultPDFtoImage.Item4[0]);
+                        list_PDFImages = resultPDFtoImage.Item4;
+                    }
+                }
+                BrowseButton.IsEnabled = false;
             }
         }
 
         private void UploadButton_Click(object sender, RoutedEventArgs e)
         {
-            //IS_PDF.MergePDF_NonScanned(@"C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\", "test", new string[2] { @"C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\Test1.pdf", @"C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\Test2.pdf" }, false);
-
-            //IS_PDF.SplitPDF_NonScanned(@"C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR\test.pdf", @"C:\Users\Raguvarthan\Documents\Symprio Projects\IronOCR", "Testing_", true);
+            ProgressBar1.Visibility = Visibility.Visible;
+            flagUploadClicked = true;
+            if (list_PDFImages.Count > 0)
+            {
+                flagUploadClicked = true;
+                foreach (System.Drawing.Image image in list_PDFImages)
+                {
+                    var ocrReadResult = OCRS.AdvancedRead_Image(image);
+                    if (ocrReadResult.Item1)
+                    {
+                        var resultMarkImage = OCRS.ProcessImage_MarkIdentifiedText(ocrReadResult.Item3.Pages[0]);
+                        if(resultMarkImage.Item1)
+                        {
+                            System.Drawing.Image markedImage = resultMarkImage.Item3;
+                            list_ProcessedImages.Add(markedImage);
+                            list_ProcessedText.Add(ocrReadResult.Item3.Pages[0].Text);
+                        }
+                        else
+                        {
+                            list_ProcessedImages.Add(image);
+                            list_ProcessedText.Add(String.Empty);
+                        }
+                    }
+                    else
+                    {
+                        list_ProcessedImages.Add(image);
+                        list_ProcessedText.Add(String.Empty);
+                    }
+                }
+                //Completed processing
+                if (list_ProcessedImages.Count > 0)
+                {
+                    ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(list_ProcessedImages[0]);
+                    imageIdx = 0;
+                }
+            }
+            UploadButton.IsEnabled = false;
+            ProgressBar1.Visibility = Visibility.Hidden;
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
+            flagUploadClicked = false;
+            FileNameTextBox.Text = String.Empty;
+            BrowseButton.IsEnabled = true;
+        }
+
+        protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MessageBox.Show("Changes");
+            double newWindowHeight = e.NewSize.Height;
+            double newWindowWidth = e.NewSize.Width;
+            double prevWindowHeight = e.PreviousSize.Height;
+            double prevWindowWidth = e.PreviousSize.Width;
+        }
+
+        private void ZoomInButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
+
+        private void ZoomOutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (flagUploadClicked)
+            {
+                if (list_ProcessedImages.Count > 0)
+                {
+                    if (imageIdx > 0)
+                    {
+                        System.Drawing.Image currentImage = list_ProcessedImages[imageIdx - 1];
+                        ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                        imageIdx--;
+                    }
+                }
+            }
+            else
+            {
+                if (list_PDFImages.Count > 0)
+                {
+                    if (imageIdx > 0)
+                    {
+                        System.Drawing.Image currentImage = list_PDFImages[imageIdx - 1];
+                        ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                        imageIdx--;
+                    }
+                }
+            }
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (flagUploadClicked)
+            {
+                if (list_ProcessedImages.Count > 0)
+                {
+                    System.Drawing.Image currentImage = list_ProcessedImages[0];
+                    ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                    imageIdx = 0;
+                }
+            }
+            else
+            {
+                if (list_ProcessedImages.Count > 0)
+                {
+                    System.Drawing.Image currentImage = list_ProcessedImages[0];
+                    ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                    imageIdx = 0;
+                }
+            }
+        }
+
+        private void RightButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (flagUploadClicked)
+            {
+                if (list_PDFImages.Count > 0)
+                {
+                    if (imageIdx + 1 < list_PDFImages.Count)
+                    {
+                        System.Drawing.Image currentImage = list_PDFImages[imageIdx + 1];
+                        ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                        imageIdx++;
+                    }
+                }
+            }
+            else
+            { 
+                if (list_PDFImages.Count > 0)
+                {
+                    if (imageIdx + 1 < list_PDFImages.Count)
+                    {
+                        System.Drawing.Image currentImage = list_PDFImages[imageIdx + 1];
+                        ImageViewer1.Source = IHS.ConvertImage_ToBitmapImage(currentImage);
+                        imageIdx++;
+                    }
+                }
+            }
+        }
+
     }
 }

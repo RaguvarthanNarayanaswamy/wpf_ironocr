@@ -169,6 +169,15 @@ namespace IronOCR
             ImageViewer1.Source = null;
             ProcessedDataTextBox.Text = String.Empty;
             BrowseButton.IsEnabled = true;
+            Panel2.Visibility = Visibility.Hidden;
+            Panel3.Visibility = Visibility.Hidden;
+            ZoomInButton.Visibility = Visibility.Hidden;
+            ZoomOutButton.Visibility = Visibility.Hidden;
+            LeftButton.Visibility = Visibility.Hidden;
+            RightButton.Visibility = Visibility.Hidden;
+            HomeButton.Visibility = Visibility.Hidden;
+            ImageViewer1.Visibility = Visibility.Hidden;
+            ProcessedDataTextBox.Visibility = Visibility.Hidden;
 
             list_ProcessedText = new List<string>();
             list_ProcessedImages = new List<System.Drawing.Image>();

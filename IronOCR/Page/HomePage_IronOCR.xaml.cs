@@ -50,14 +50,17 @@ namespace IronOCR
             FileNameTextBox.Width = (wordArea_Width/5)*3;
 
             ProgressBar1.Width = ((wordArea_Width / 5) * 2) - 355;
-            ImageViewer1.Width = (wordArea_Width / 2) - 15;
-            //ImageViewer2.Width = (wordArea_Width / 2) - 15;
+            BorderImageViewer.Width = (wordArea_Width / 2) - 15;
             ProcessedDataTextBox.Width = (wordArea_Width / 2) - 15;
             Panel2_1.Width = (wordArea_Width / 5);
             Panel2_2.Width = (wordArea_Width / 5);
             Panel2_3.Width = (wordArea_Width / 5);
+            Panel2_3_1.Width = (wordArea_Width / 5)/3;
+            Panel2_3_2.Width = (wordArea_Width / 5)/3;
+            Panel2_3_3.Width = (wordArea_Width / 5)/3;
             Panel2_4.Width = (wordArea_Width / 5);
             Panel2_5.Width = (wordArea_Width / 5);
+            //HomeButton.Margin = new Thickness(((wordArea_Width / 5)/2)-77.5,0,0,0);
 
             //Button Enable/Diable
             FileNameTextBox.IsEnabled = false; 

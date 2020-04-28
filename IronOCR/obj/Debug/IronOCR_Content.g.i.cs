@@ -8,16 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/browser.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/check.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/dislike.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/house.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/leftarrow.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/pen.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/pointer.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/rightarrow.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/wrong.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/zoom-in.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/buttons/zoom-out.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("asserts/microsoftocr_logo.png")]
 
 

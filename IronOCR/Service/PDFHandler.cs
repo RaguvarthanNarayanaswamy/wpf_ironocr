@@ -23,7 +23,7 @@ namespace IronOCR.Service
                 }
                 catch (Exception exp)
                 {
-                    return Tuple.Create(true, "Success");
+                    return Tuple.Create(true, exp.Message);
                 }
             }
             else

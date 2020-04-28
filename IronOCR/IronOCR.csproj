@@ -68,9 +68,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Page\UploadPage.xaml.cs">
-      <DependentUpon>UploadPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Service\GhostScriptHandler.cs" />
     <Compile Include="Service\FolderFileHandler.cs" />
     <Compile Include="Service\PageHandler.cs" />
@@ -78,7 +75,7 @@
     <Compile Include="Service\ImageHandler.cs" />
     <Compile Include="Service\IronOCRHandler.cs" />
     <Compile Include="Service\ZoomBorder.cs" />
-    <Page Include="Page\HomePage.xaml">
+    <Page Include="Page\HomePage_IronOCR.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -90,17 +87,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Page\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Compile Include="Page\HomePage_IronOCR.xaml.cs">
+      <DependentUpon>HomePage_IronOCR.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Page\UploadPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -143,7 +136,9 @@
     <Resource Include="Asserts\IronOCR_Background.png" />
     <Resource Include="Asserts\IronOCR_Logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Asserts\MicrosoftOCR_Logo.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Asserts\Buttons\browser.png" />
     <Resource Include="Asserts\Buttons\check.png" />
